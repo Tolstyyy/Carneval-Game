@@ -1,28 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class MoleClicked : MonoBehaviour
 {
     public float destroyTime = 1.0f;
     private GameObject gameManager;
+    public ParticleSystem hitParticle;
 
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("Manager");
-        Destroy(this.gameObject, destroyTime);
+        
     }
     void OnMouseDown() 
     {
-        Debug.Log("Clicked");
-        Destroy(this.gameObject);
-
-        gameManager.GetComponent<Score>().molesClicked++;
+        hitParticle.Play();
+        Destroy(gameObject);
+        gameManager.GetComponent<Score>().molesClicked++; // Increment amount of moles clicked variable in the Score script attached to game manager
     }
 
     void Update()
     {
-        Destroy(this.gameObject, 1.0f);
+        Destroy(gameObject, destroyTime);
     }
+
+
 }
