@@ -5,22 +5,34 @@ using UnityEngine;
 public class MoleScript : MonoBehaviour
 {
     public GameObject mole;
+    public GameObject buffMole;
 
-    // Spawn Interval
-    public int intervalMin = 4;
-    public int intervalMax = 30;
+    private int moleCount;
 
-    void Start()
+    private void Update()
     {
-        Invoke("Spawn", Random.Range(intervalMin, intervalMax));  // Start the Spawn method
+        moleCount = GameObject.FindGameObjectsWithTag("Mole").Length;
+
+        if (moleCount == 0)
+        {
+            Spawn(1);
+        }       
     }
 
-    void Spawn()
+    void Spawn(int amount)
     {
-        // Spawn the mole
-        GameObject g = (GameObject)Instantiate(mole, transform.position, Quaternion.identity);
-
-        // Next Spawn       
-        Invoke("Spawn", Random.Range(intervalMin, intervalMax));      
+        var position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+        
+        for (int i = 0; i < amount; i++)
+        {
+            if (Random.value > 0.7)
+            {
+                Instantiate(buffMole, position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(mole, position, Quaternion.identity);
+            }       
+        }
     }
 }

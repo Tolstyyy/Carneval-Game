@@ -4,26 +4,34 @@ using UnityEngine;
 
 public class MoleClicked : MonoBehaviour
 {
-    public float destroyTime = 1.0f;
-    private GameObject gameManager;
-    public ParticleSystem hitParticle;
-
-    void Start()
-    {
-        gameManager = GameObject.FindGameObjectWithTag("Manager");
-        
-    }
-    void OnMouseDown() 
-    {
-        hitParticle.Play();
-        Destroy(gameObject);
-        gameManager.GetComponent<Score>().molesClicked++; // Increment amount of moles clicked variable in the Score script attached to game manager
-    }
+    public GameObject GameManager;
 
     void Update()
     {
-        Destroy(gameObject, destroyTime);
+        Input();
     }
 
+    void Input()
+    {
+        if (UnityEngine.Input.GetMouseButtonDown(0)) // If left mouse button pressed execute the body
+        {
+            Ray ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition); // Send a ray from the camera to the position of the mouse
 
+            RaycastHit hitInfo; 
+            if (Physics.Raycast(ray, out hitInfo))
+            {
+                ITakeDamage damagable = hitInfo.collider.GetComponent<ITakeDamage>();
+                if (damagable != null)
+                {
+                    damagable.TakeDamage(1.0f);
+                }
+                else
+                {
+                    Debug.Log("Didn't hit target");
+                    GameManager.GetComponent<Timer>().timer -= 5;
+                }
+            }
+            
+        }
+    }
 }
