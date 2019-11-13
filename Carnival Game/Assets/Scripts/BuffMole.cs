@@ -2,7 +2,4 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffMole : Mole, ITakeDamage
-{
-    
-}
+public class BuffMole : Mole, ITakeDamage {}

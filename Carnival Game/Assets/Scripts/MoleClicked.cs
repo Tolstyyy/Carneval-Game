@@ -8,7 +8,10 @@ public class MoleClicked : MonoBehaviour
 
     void Update()
     {
-        Input();
+        if (Time.deltaTime != 0)
+        {
+            Input();
+        }  
     }
 
     void Input()
@@ -28,7 +31,7 @@ public class MoleClicked : MonoBehaviour
                 else
                 {
                     Debug.Log("Didn't hit target");
-                    GameManager.GetComponent<Timer>().timer -= 5;
+                    GameManager.GetComponent<Timer>().fTimer -= 10;
                 }
             }
             
