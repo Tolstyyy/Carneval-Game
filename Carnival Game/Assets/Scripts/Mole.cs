@@ -6,7 +6,6 @@ public class Mole : MonoBehaviour, ITakeDamage
 {
     public float moleHealth = 1.0f;                 // Health of the mole
     public float moleDestroyTime = 1.5f;            // Time it takes to destroy the mole
-    public ParticleSystem onDeathParticle;          // Particle system when mole dies
     private GameObject gameManager;                 // Game manager gameobject reference
 
     public void Start()
@@ -19,8 +18,7 @@ public class Mole : MonoBehaviour, ITakeDamage
     {
         moleHealth -= damage;
         if (moleHealth <= 0)
-        {
-            onDeathParticle.Play(); // Play the particle system          
+        {      
             gameManager.GetComponent<Score>().molesClicked++; // Increment amount of moles clicked variable in the Score script attached to game manager
             gameManager.GetComponent<Timer>().fTimer += 2f; // Add 2 seconds to the timer in the Timer script attached to the game manager
             Destroy(gameObject); // Destroy the mole
